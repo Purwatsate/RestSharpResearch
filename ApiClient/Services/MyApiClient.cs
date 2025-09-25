@@ -1,6 +1,8 @@
 using ApiClient.Exceptions;
 using ApiClient.Interceptors;
 using ApiClient.Services.Interface;
+using ApiShared.Settings;
+using Microsoft.Extensions.Options;
 using RestSharp;
 
 namespace ApiClient.Services
@@ -8,13 +10,12 @@ namespace ApiClient.Services
     public class MyApiClient : IMyApiClient
     {
         private readonly RestClient _client;
-        private const string token = "token test";
 
-        public MyApiClient(string baseUrl)
+        public MyApiClient(IOptions<ApiClientSettings> settings, ITokenProvider tokenProvider)
         {
-            var options = new RestClientOptions(baseUrl)
+            var options = new RestClientOptions(settings.Value.BaseUrl)
             {
-                Interceptors = [new HeaderInterceptor("Authorization", $"Bearer {token}")]
+                Interceptors = [new HeaderInterceptor("Authorization", $"Bearer {tokenProvider.GetToken()}")]
             };
             _client = new RestClient(options);
         }
@@ -62,5 +63,4 @@ namespace ApiClient.Services
             return response.Data!;
         }
     }
-
 }
