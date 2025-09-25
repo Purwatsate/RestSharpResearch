@@ -44,7 +44,8 @@ namespace ApiClient.Endpoints
                         return Results.Problem(
                             $"Call failed ({(int)ex.StatusCode}): {ex.Message}");
                     }
-                });
+                }
+            );
 
             app.MapGet(
                 "/test-error",
@@ -60,7 +61,8 @@ namespace ApiClient.Endpoints
                         return Results.Problem(
                             $"Server error ({(int)ex.StatusCode}): {ex.Message}");
                     }
-                });
+                }
+            );
         }
     }
 }
