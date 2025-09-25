@@ -22,7 +22,7 @@ app.Use(async (context, next) =>
     }
 
     // Query-string parameters (from AddQueryParameter)
-    if (context.Request.Query.Any())
+    if (context.Request.Query.Count != 0)
     {
         foreach (var kvp in context.Request.Query)
         {
@@ -31,7 +31,7 @@ app.Use(async (context, next) =>
     }
 
     // Route values (from AddUrlSegment -> matched by routing)
-    if (context.Request.RouteValues.Any())
+    if (context.Request.RouteValues.Count != 0)
     {
         foreach (var kvp in context.Request.RouteValues)
         {
